@@ -1,0 +1,22 @@
+[gd_resource type="Resource" script_class="CharacterStats" load_steps=3 format=3 uid="uid://ciaorrf4jgje0"]
+
+[ext_resource type="Script" uid="uid://b5nw4wukq8usa" path="res://charas/chara_stats_resource.gd" id="1_bq7pa"]
+[ext_resource type="Texture2D" uid="uid://b13q3m3x7fmxl" path="res://assets/cyc.png" id="2_jgemt"]
+
+[resource]
+script = ExtResource("1_bq7pa")
+sprite = ExtResource("2_jgemt")
+description = "Brave humanoid trained to fight. Tough and strong."
+STR = 17
+MAG = 11
+END = 23
+SPD = 12
+LCK = 11
+aff_slash = "neutral"
+aff_blunt = "neutral"
+aff_pierce = "neutral"
+aff_fire = "neutral"
+aff_water = "neutral"
+aff_wind = "resist"
+aff_electric = "weak"
+moveset = Array[String](["Bash", "Quake", "Dakakaja", "Ara", "Hyper"])

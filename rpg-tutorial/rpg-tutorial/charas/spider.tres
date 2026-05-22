@@ -1,0 +1,22 @@
+[gd_resource type="Resource" script_class="CharacterStats" load_steps=3 format=3 uid="uid://byq2kcgdluh50"]
+
+[ext_resource type="Script" uid="uid://b5nw4wukq8usa" path="res://charas/chara_stats_resource.gd" id="1_kifa0"]
+[ext_resource type="Texture2D" uid="uid://csufp2vdhe060" path="res://assets/tile_0122.png" id="2_03t8h"]
+
+[resource]
+script = ExtResource("1_kifa0")
+sprite = ExtResource("2_03t8h")
+description = "Lightning fast spider"
+STR = 15
+MAG = 16
+END = 20
+SPD = 18
+LCK = 15
+aff_slash = "neutral"
+aff_blunt = "resist"
+aff_pierce = "weak"
+aff_fire = "neutral"
+aff_water = "neutral"
+aff_wind = "neutral"
+aff_electric = "neutral"
+moveset = Array[String](["Dabi", "Dabigi", "Dakanda", "Takanda", "Carinda"])

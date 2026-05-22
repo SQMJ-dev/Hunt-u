@@ -1,0 +1,54 @@
+[gd_scene load_steps=5 format=3 uid="uid://bcsffw370h3i1"]
+
+[ext_resource type="Texture2D" uid="uid://7sut68kbta2a" path="res://assets/tile_0198.png" id="1_6o6su"]
+
+[sub_resource type="Animation" id="Animation_ywfpy"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(-65, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_eox1h"]
+resource_name = "iddle"
+loop_mode = 1
+step = 0.05
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5, 1),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(-65, 2), Vector2(-65, 0), Vector2(-65, 2)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_rpmoh"]
+_data = {
+&"RESET": SubResource("Animation_ywfpy"),
+&"iddle": SubResource("Animation_eox1h")
+}
+
+[node name="SelectionHand" type="Node2D"]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(-65, 0)
+scale = Vector2(2, 2)
+texture = ExtResource("1_6o6su")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_rpmoh")
+}
+autoplay = "iddle"
