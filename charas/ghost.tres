@@ -1,0 +1,22 @@
+[gd_resource type="Resource" script_class="CharacterStats" load_steps=3 format=3 uid="uid://pep7ryalfuk6"]
+
+[ext_resource type="Script" uid="uid://b5nw4wukq8usa" path="res://charas/chara_stats_resource.gd" id="1_ifojm"]
+[ext_resource type="Texture2D" uid="uid://c2vkx2gtajmu5" path="res://assets/ghost1.png" id="2_7rv3n"]
+
+[resource]
+script = ExtResource("1_ifojm")
+sprite = ExtResource("2_7rv3n")
+description = "Ghost capable of using many magic"
+STR = 14
+MAG = 15
+END = 21
+SPD = 11
+LCK = 10
+aff_slash = "resist"
+aff_blunt = "resist"
+aff_pierce = "neutral"
+aff_fire = "neutral"
+aff_water = "weak"
+aff_wind = "neutral"
+aff_electric = "neutral"
+moveset = Array[String](["Ara", "Bila", "Gari", "Takanda", "Drain"])

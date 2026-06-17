@@ -1,0 +1,22 @@
+[gd_resource type="Resource" script_class="CharacterStats" load_steps=3 format=3 uid="uid://y7bys4d0hfvf"]
+
+[ext_resource type="Script" uid="uid://b5nw4wukq8usa" path="res://charas/chara_stats_resource.gd" id="1_i58od"]
+[ext_resource type="Texture2D" uid="uid://b84k15opr06lo" path="res://assets/tile_0084.png" id="2_ltck8"]
+
+[resource]
+script = ExtResource("1_i58od")
+sprite = ExtResource("2_ltck8")
+description = ""
+STR = 7
+MAG = 22
+END = 18
+SPD = 13
+LCK = 11
+aff_slash = "neutral"
+aff_blunt = "weak"
+aff_pierce = "neutral"
+aff_fire = "resist"
+aff_water = "neutral"
+aff_wind = "neutral"
+aff_electric = "neutral"
+moveset = Array[String](["Aragi", "Bilagi", "Medri", "Garigi", "Concentrate"])

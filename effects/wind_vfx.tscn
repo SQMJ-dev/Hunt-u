@@ -1,0 +1,44 @@
+[gd_scene load_steps=8 format=3 uid="uid://rdrgdjhuhxl1"]
+
+[ext_resource type="Texture2D" uid="uid://dhqvohdghxbrx" path="res://effects/wind1.png" id="1_0bowj"]
+[ext_resource type="Texture2D" uid="uid://hply1e71n88o" path="res://effects/wind2.png" id="2_l8ylp"]
+[ext_resource type="Texture2D" uid="uid://btgscwv5bu1nn" path="res://effects/wind3.png" id="3_o3wcs"]
+[ext_resource type="Texture2D" uid="uid://dqepoxdpvnlii" path="res://effects/wind4.png" id="4_1akte"]
+[ext_resource type="Texture2D" uid="uid://ut01rdnacwvr" path="res://effects/wind5.png" id="5_ec8i1"]
+[ext_resource type="Script" uid="uid://dy845a7algjr7" path="res://effects/wind.gd" id="6_ypyrx"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_48q7p"]
+animations = [{
+"frames": [],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_0bowj")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_l8ylp")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_o3wcs")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_1akte")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_ec8i1")
+}],
+"loop": false,
+"name": &"wind",
+"speed": 8.0
+}]
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D"]
+scale = Vector2(4, 4)
+sprite_frames = SubResource("SpriteFrames_48q7p")
+animation = &"wind"
+script = ExtResource("6_ypyrx")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]

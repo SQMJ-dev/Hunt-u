@@ -1,0 +1,46 @@
+[gd_scene load_steps=8 format=3 uid="uid://yyhe7wy5xh83"]
+
+[ext_resource type="Texture2D" uid="uid://cdber0pblg4sw" path="res://effects/buff1.png" id="1_vydbn"]
+[ext_resource type="Texture2D" uid="uid://cp3m80ijpep16" path="res://effects/buff2.png" id="2_qfyoy"]
+[ext_resource type="Texture2D" uid="uid://dvp0186sj1yb5" path="res://effects/buff3.png" id="3_cicyo"]
+[ext_resource type="Texture2D" uid="uid://1tudlmpi3514" path="res://effects/buff4.png" id="4_jlpis"]
+[ext_resource type="Texture2D" uid="uid://bb383ie7p656f" path="res://effects/buff5.png" id="5_b3rp5"]
+[ext_resource type="Script" uid="uid://bwlhm6lgooufa" path="res://effects/buff.gd" id="6_ll4xq"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_48q7p"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_vydbn")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_qfyoy")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_cicyo")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_jlpis")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_b3rp5")
+}],
+"loop": false,
+"name": &"buff",
+"speed": 8.0
+}, {
+"frames": [],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D"]
+scale = Vector2(3, 3)
+sprite_frames = SubResource("SpriteFrames_48q7p")
+animation = &"buff"
+frame = 4
+frame_progress = 1.0
+script = ExtResource("6_ll4xq")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]

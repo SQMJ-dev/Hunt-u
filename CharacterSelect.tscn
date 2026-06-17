@@ -1,0 +1,178 @@
+[gd_scene load_steps=18 format=3 uid="uid://3nbty4jh57gn"]
+
+[ext_resource type="Script" uid="uid://dfm65fdckel7m" path="res://CharacterSelect.gd" id="1_pa1e4"]
+[ext_resource type="PackedScene" uid="uid://bkolnobdfpq71" path="res://character.tscn" id="2_h656l"]
+[ext_resource type="Resource" uid="uid://y7bys4d0hfvf" path="res://charas/wizard.tres" id="3_ydskc"]
+[ext_resource type="Resource" uid="uid://ciaorrf4jgje0" path="res://charas/eagle.tres" id="4_aboqn"]
+[ext_resource type="Resource" uid="uid://pep7ryalfuk6" path="res://charas/ghost.tres" id="5_r4wqf"]
+[ext_resource type="Resource" uid="uid://cgh1igl10gvks" path="res://charas/knight.tres" id="6_mhdur"]
+[ext_resource type="Resource" uid="uid://da76a20w2yr2a" path="res://charas/monk.tres" id="7_m1178"]
+[ext_resource type="Resource" uid="uid://byq2kcgdluh50" path="res://charas/spider.tres" id="8_4ylyw"]
+[ext_resource type="PackedScene" uid="uid://bcsffw370h3i1" path="res://selection_hand.tscn" id="9_u4xhv"]
+[ext_resource type="Texture2D" uid="uid://j07gcmjqr3km" path="res://assets/textbox.png" id="10_40nw7"]
+[ext_resource type="Texture2D" uid="uid://b86m3sn22jfj2" path="res://assets/textbox2.png" id="10_g64d6"]
+[ext_resource type="LabelSettings" uid="uid://oqnjfy6eummr" path="res://new_label_settings.tres" id="13_eikyy"]
+[ext_resource type="Texture2D" uid="uid://bk2vqocy36kog" path="res://assets/movebox.png" id="13_ptxqb"]
+[ext_resource type="Texture2D" uid="uid://cgjlt3g41dcmf" path="res://effects/arrowright.png" id="13_q1lj8"]
+[ext_resource type="Texture2D" uid="uid://ye2s28va4k4w" path="res://effects/arrowleft.png" id="14_ptxqb"]
+
+[sub_resource type="Gradient" id="Gradient_uambc"]
+offsets = PackedFloat32Array(0.559055, 1)
+colors = PackedColorArray(0.649786, 0.654232, 1, 1, 0.580768, 0.376771, 1, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_4akcq"]
+gradient = SubResource("Gradient_uambc")
+
+[node name="characterSelect" type="Node2D"]
+script = ExtResource("1_pa1e4")
+
+[node name="characters" type="Node2D" parent="."]
+z_index = 1
+
+[node name="Wizard" parent="characters" instance=ExtResource("2_h656l")]
+position = Vector2(1030, 518)
+race_stats = ExtResource("3_ydskc")
+
+[node name="Eagle" parent="characters" instance=ExtResource("2_h656l")]
+visible = false
+position = Vector2(350, 375)
+race_stats = ExtResource("4_aboqn")
+
+[node name="Ghost" parent="characters" instance=ExtResource("2_h656l")]
+visible = false
+position = Vector2(500, 250)
+race_stats = ExtResource("5_r4wqf")
+
+[node name="Knight" parent="characters" instance=ExtResource("2_h656l")]
+visible = false
+position = Vector2(650, 375)
+race_stats = ExtResource("6_mhdur")
+
+[node name="Monk" parent="characters" instance=ExtResource("2_h656l")]
+visible = false
+position = Vector2(800, 250)
+race_stats = ExtResource("7_m1178")
+
+[node name="Spider" parent="characters" instance=ExtResource("2_h656l")]
+visible = false
+position = Vector2(950, 375)
+race_stats = ExtResource("8_4ylyw")
+
+[node name="background" type="Sprite2D" parent="."]
+position = Vector2(960.282, 541.955)
+rotation = 1.5708
+scale = Vector2(4.23773, 1926.54)
+texture = SubResource("GradientTexture1D_4akcq")
+
+[node name="selection_hand" parent="." instance=ExtResource("9_u4xhv")]
+position = Vector2(200, 250)
+
+[node name="dialog" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 1155.0
+offset_bottom = 649.0
+
+[node name="topBox" type="NinePatchRect" parent="dialog"]
+layout_mode = 0
+offset_left = 36.0
+offset_top = 24.0
+offset_right = 188.0
+offset_bottom = 36.0
+scale = Vector2(12.1563, 12.3203)
+texture = ExtResource("10_g64d6")
+region_rect = Rect2(10, 21, 44, 25)
+patch_margin_left = 2
+patch_margin_top = 2
+patch_margin_right = 2
+patch_margin_bottom = 2
+
+[node name="topBoxLabel" type="Label" parent="dialog"]
+layout_mode = 0
+offset_left = 62.0
+offset_top = 38.0
+offset_right = 1118.0
+offset_bottom = 156.0
+text = "Select 3 characters to be in your party.
+"
+label_settings = ExtResource("13_eikyy")
+autowrap_mode = 2
+clip_text = true
+text_overrun_behavior = 4
+
+[node name="bottomBox" type="NinePatchRect" parent="dialog"]
+layout_mode = 0
+offset_left = 22.0
+offset_top = 101.0
+offset_right = 83.0
+offset_bottom = 173.0
+scale = Vector2(12.1563, 12.3203)
+texture = ExtResource("10_40nw7")
+region_rect = Rect2(10, 2, 52, 43)
+patch_margin_top = 27
+patch_margin_right = 18
+
+[node name="bottomBoxLabel" type="RichTextLabel" parent="dialog"]
+layout_mode = 0
+offset_left = 30.0
+offset_top = 336.0
+offset_right = 624.0
+offset_bottom = 485.0
+theme_override_font_sizes/normal_font_size = 28
+bbcode_enabled = true
+text = "Here it will be the description and stats text of each character."
+fit_content = true
+autowrap_mode = 2
+tab_size = 5
+
+[node name="confirmButtons" type="Control" parent="."]
+visible = false
+layout_mode = 3
+anchors_preset = 0
+offset_right = 1922.0
+offset_bottom = 1083.0
+
+[node name="NoBox" type="Sprite2D" parent="confirmButtons"]
+position = Vector2(1845, 884.61)
+scale = Vector2(3.812, 4.047)
+texture = ExtResource("13_ptxqb")
+
+[node name="YesBox" type="Sprite2D" parent="confirmButtons"]
+position = Vector2(1845, 824.753)
+scale = Vector2(3.8125, 4.04705)
+texture = ExtResource("13_ptxqb")
+
+[node name="YesLabel" type="Label" parent="confirmButtons"]
+layout_mode = 0
+offset_left = 1811.33
+offset_top = 804.442
+offset_right = 1882.33
+offset_bottom = 839.442
+text = "Yes"
+label_settings = ExtResource("13_eikyy")
+horizontal_alignment = 1
+autowrap_mode = 2
+
+[node name="NoLabel" type="Label" parent="confirmButtons"]
+layout_mode = 0
+offset_left = 1809.33
+offset_top = 866.442
+offset_right = 1885.33
+offset_bottom = 901.442
+text = "No"
+label_settings = ExtResource("13_eikyy")
+horizontal_alignment = 1
+autowrap_mode = 2
+
+[node name="Node2D" type="Node2D" parent="."]
+position = Vector2(514, 734)
+
+[node name="arrow right" type="Sprite2D" parent="."]
+position = Vector2(1279, 524)
+scale = Vector2(5.5, 3.875)
+texture = ExtResource("13_q1lj8")
+
+[node name="arrow left" type="Sprite2D" parent="."]
+position = Vector2(799, 524)
+scale = Vector2(5.5, 3.875)
+texture = ExtResource("14_ptxqb")

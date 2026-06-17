@@ -1,0 +1,22 @@
+[gd_resource type="Resource" script_class="CharacterStats" load_steps=3 format=3 uid="uid://da76a20w2yr2a"]
+
+[ext_resource type="Script" uid="uid://b5nw4wukq8usa" path="res://charas/chara_stats_resource.gd" id="1_i4xfj"]
+[ext_resource type="Texture2D" uid="uid://cuooiwd1705rg" path="res://assets/tile_0086.png" id="2_wslp0"]
+
+[resource]
+script = ExtResource("1_i4xfj")
+sprite = ExtResource("2_wslp0")
+description = "Avid support that heal, buff and debuff"
+STR = 9
+MAG = 20
+END = 22
+SPD = 12
+LCK = 13
+aff_slash = "neutral"
+aff_blunt = "neutral"
+aff_pierce = "neutral"
+aff_fire = "weak"
+aff_water = "resist"
+aff_wind = "neutral"
+aff_electric = "neutral"
+moveset = Array[String](["Bila", "Medri", "Carikaja", "Dri", "Cleanse"])

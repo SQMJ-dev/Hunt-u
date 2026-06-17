@@ -1,0 +1,320 @@
+[gd_scene load_steps=15 format=3 uid="uid://bgkbmsa5owqvi"]
+
+[ext_resource type="Script" uid="uid://dse6p46h1be2r" path="res://battlefield.gd" id="1_5inxc"]
+[ext_resource type="PackedScene" uid="uid://bkolnobdfpq71" path="res://character.tscn" id="1_hxlgx"]
+[ext_resource type="Texture2D" uid="uid://cefwingql0824" path="res://assets/background.png" id="2_m83rw"]
+[ext_resource type="PackedScene" uid="uid://uwt5gubyfbex" path="res://char_hand.tscn" id="3_4eiu0"]
+[ext_resource type="Texture2D" uid="uid://j07gcmjqr3km" path="res://assets/textbox.png" id="8_ki6g1"]
+[ext_resource type="PackedScene" uid="uid://bcsffw370h3i1" path="res://selection_hand.tscn" id="8_nlylj"]
+[ext_resource type="Texture2D" uid="uid://b86m3sn22jfj2" path="res://assets/textbox2.png" id="8_qd1yl"]
+[ext_resource type="LabelSettings" uid="uid://oqnjfy6eummr" path="res://new_label_settings.tres" id="10_0fy0v"]
+[ext_resource type="Resource" uid="uid://cmg6r8dmwr10m" path="res://charas/Ghosto.tres" id="11_cho8x"]
+[ext_resource type="Texture2D" uid="uid://bk2vqocy36kog" path="res://assets/movebox.png" id="11_sg2xi"]
+[ext_resource type="Resource" uid="uid://wyf621j6bi8u" path="res://charas/Hantuo.tres" id="12_t7362"]
+[ext_resource type="Resource" uid="uid://rpr7ad7cexsc" path="res://charas/Bat.tres" id="13_k7x1t"]
+
+[sub_resource type="Gradient" id="Gradient_mh767"]
+offsets = PackedFloat32Array(0.314961, 1)
+colors = PackedColorArray(0.408229, 0.575521, 0.964957, 1, 0.124013, 0.220914, 0.258867, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_54h1a"]
+gradient = SubResource("Gradient_mh767")
+
+[node name="battlefield" type="Node2D"]
+script = ExtResource("1_5inxc")
+
+[node name="background" type="Sprite2D" parent="."]
+position = Vector2(956, 542)
+texture = ExtResource("2_m83rw")
+
+[node name="allies" type="Node2D" parent="."]
+z_index = 1
+
+[node name="selection_hand" parent="." instance=ExtResource("8_nlylj")]
+position = Vector2(200, 250)
+
+[node name="char_hand" parent="." instance=ExtResource("3_4eiu0")]
+z_index = 2
+
+[node name="enemies" type="Node2D" parent="."]
+
+[node name="Ghosto" parent="enemies" instance=ExtResource("1_hxlgx")]
+race_stats = ExtResource("11_cho8x")
+
+[node name="Hantuo" parent="enemies" instance=ExtResource("1_hxlgx")]
+race_stats = ExtResource("12_t7362")
+
+[node name="Bat" parent="enemies" instance=ExtResource("1_hxlgx")]
+race_stats = ExtResource("13_k7x1t")
+
+[node name="dialog" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 1921.0
+offset_bottom = 1077.0
+
+[node name="bottomBox" type="NinePatchRect" parent="dialog"]
+layout_mode = 0
+offset_left = 15.0
+offset_top = 856.0
+offset_right = 167.0
+offset_bottom = 872.0
+scale = Vector2(12.1563, 12.3203)
+texture = ExtResource("8_qd1yl")
+region_rect = Rect2(10, 21, 44, 25)
+patch_margin_left = 2
+patch_margin_top = 2
+patch_margin_right = 2
+patch_margin_bottom = 2
+
+[node name="bottomBoxLabel" type="RichTextLabel" parent="dialog"]
+layout_mode = 0
+offset_left = 45.0
+offset_top = 932.0
+offset_right = 639.0
+offset_bottom = 1081.0
+theme_override_font_sizes/normal_font_size = 28
+bbcode_enabled = true
+text = "Here it will be the description and stats text of each character."
+fit_content = true
+autowrap_mode = 2
+tab_size = 5
+
+[node name="topBox" type="Sprite2D" parent="dialog"]
+visible = false
+rotation = 1.5708
+scale = Vector2(0.503937, 1845.72)
+texture = ExtResource("8_ki6g1")
+region_rect = Rect2(14.6802, 29.1842, 29.5976, 12.8401)
+
+[node name="topBoxLabel" type="Label" parent="dialog"]
+visible = false
+layout_mode = 0
+offset_left = 137.0
+offset_top = 69.0
+offset_right = 1193.0
+offset_bottom = 187.0
+text = "Select 3 characters to be in your party.
+"
+label_settings = ExtResource("10_0fy0v")
+autowrap_mode = 2
+clip_text = true
+text_overrun_behavior = 4
+
+[node name="confirmButtons" type="Control" parent="."]
+visible = false
+layout_mode = 3
+anchors_preset = 0
+offset_right = 1922.0
+offset_bottom = 1083.0
+
+[node name="NoBox" type="Sprite2D" parent="confirmButtons"]
+visible = false
+position = Vector2(1845.22, 884.61)
+rotation = 1.5708
+scale = Vector2(0.200079, 98.4341)
+texture = SubResource("GradientTexture1D_54h1a")
+
+[node name="YesBox" type="Sprite2D" parent="confirmButtons"]
+visible = false
+position = Vector2(1845.52, 822.61)
+rotation = 1.5708
+scale = Vector2(0.200079, 97.8396)
+texture = SubResource("GradientTexture1D_54h1a")
+
+[node name="YesLabel" type="Label" parent="confirmButtons"]
+visible = false
+layout_mode = 0
+offset_left = 1811.33
+offset_top = 804.442
+offset_right = 1882.33
+offset_bottom = 839.442
+text = "Yes"
+label_settings = ExtResource("10_0fy0v")
+horizontal_alignment = 1
+autowrap_mode = 2
+
+[node name="NoLabel" type="Label" parent="confirmButtons"]
+visible = false
+layout_mode = 0
+offset_left = 1809.33
+offset_top = 866.442
+offset_right = 1885.33
+offset_bottom = 901.442
+text = "No"
+label_settings = ExtResource("10_0fy0v")
+horizontal_alignment = 1
+autowrap_mode = 2
+
+[node name="attackButtons" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="0Box" type="NinePatchRect" parent="attackButtons"]
+visible = false
+self_modulate = Color(1, 1, 1, 0.705882)
+layout_mode = 0
+offset_left = 212.0
+offset_top = 289.0
+offset_right = 426.0
+offset_bottom = 337.0
+texture = ExtResource("11_sg2xi")
+region_rect = Rect2(1, 10, 30, 11)
+
+[node name="1Box" type="NinePatchRect" parent="attackButtons"]
+visible = false
+self_modulate = Color(1, 1, 1, 0.705882)
+layout_mode = 0
+offset_left = 211.0
+offset_top = 346.0
+offset_right = 425.0
+offset_bottom = 394.0
+texture = ExtResource("11_sg2xi")
+region_rect = Rect2(1, 10, 30, 11)
+
+[node name="2Box" type="NinePatchRect" parent="attackButtons"]
+visible = false
+self_modulate = Color(1, 1, 1, 0.705882)
+layout_mode = 0
+offset_left = 210.0
+offset_top = 400.0
+offset_right = 424.0
+offset_bottom = 448.0
+texture = ExtResource("11_sg2xi")
+region_rect = Rect2(1, 10, 30, 11)
+
+[node name="3Box" type="NinePatchRect" parent="attackButtons"]
+visible = false
+self_modulate = Color(1, 1, 1, 0.705882)
+layout_mode = 0
+offset_left = 212.0
+offset_top = 455.0
+offset_right = 426.0
+offset_bottom = 503.0
+texture = ExtResource("11_sg2xi")
+region_rect = Rect2(1, 10, 30, 11)
+
+[node name="4Box" type="NinePatchRect" parent="attackButtons"]
+visible = false
+self_modulate = Color(1, 1, 1, 0.705882)
+layout_mode = 0
+offset_left = 212.0
+offset_top = 508.0
+offset_right = 426.0
+offset_bottom = 556.0
+texture = ExtResource("11_sg2xi")
+region_rect = Rect2(1, 10, 30, 11)
+
+[node name="0Label" type="Label" parent="attackButtons"]
+visible = false
+layout_mode = 0
+offset_left = 208.0
+offset_top = 292.0
+offset_right = 423.0
+offset_bottom = 375.0
+text = "Attack 1
+"
+label_settings = ExtResource("10_0fy0v")
+horizontal_alignment = 1
+autowrap_mode = 2
+
+[node name="1Label" type="Label" parent="attackButtons"]
+visible = false
+layout_mode = 0
+offset_left = 207.0
+offset_top = 351.0
+offset_right = 414.0
+offset_bottom = 434.0
+text = "Attack 2
+"
+label_settings = ExtResource("10_0fy0v")
+horizontal_alignment = 1
+autowrap_mode = 2
+
+[node name="2Label" type="Label" parent="attackButtons"]
+visible = false
+layout_mode = 0
+offset_left = 211.992
+offset_top = 408.712
+offset_right = 418.992
+offset_bottom = 491.712
+text = "Attack 3
+"
+label_settings = ExtResource("10_0fy0v")
+horizontal_alignment = 1
+autowrap_mode = 2
+
+[node name="3Label" type="Label" parent="attackButtons"]
+visible = false
+layout_mode = 0
+offset_left = 211.0
+offset_top = 458.0
+offset_right = 417.0
+offset_bottom = 498.0
+text = "Attack 4"
+label_settings = ExtResource("10_0fy0v")
+horizontal_alignment = 1
+autowrap_mode = 2
+
+[node name="4Label" type="Label" parent="attackButtons"]
+visible = false
+layout_mode = 0
+offset_left = 210.0
+offset_top = 511.0
+offset_right = 416.0
+offset_bottom = 551.0
+text = "Attack 4"
+label_settings = ExtResource("10_0fy0v")
+horizontal_alignment = 1
+autowrap_mode = 2
+
+[node name="Node2D" type="Node2D" parent="."]
+position = Vector2(1484, 640)
+
+[node name="mainActionButtons" type="Node2D" parent="."]
+
+[node name="AttackBox" type="Sprite2D" parent="mainActionButtons"]
+position = Vector2(118, 391)
+scale = Vector2(3.35298, 1.75684)
+texture = ExtResource("8_qd1yl")
+
+[node name="AttackLabel" type="Label" parent="mainActionButtons"]
+offset_left = 68.75
+offset_top = 374.125
+offset_right = 167.75
+offset_bottom = 406.125
+theme_override_font_sizes/font_size = 23
+text = "ATTACK"
+
+[node name="SkillsBox" type="Sprite2D" parent="mainActionButtons"]
+position = Vector2(117, 459)
+scale = Vector2(3.35298, 1.75684)
+texture = ExtResource("8_qd1yl")
+
+[node name="SkillsLabel" type="Label" parent="mainActionButtons"]
+offset_left = 66.75
+offset_top = 448.125
+offset_right = 165.75
+offset_bottom = 480.125
+theme_override_font_sizes/font_size = 23
+text = "SKILLS"
+
+[node name="GuardBox" type="Sprite2D" parent="mainActionButtons"]
+position = Vector2(117, 528)
+scale = Vector2(3.35298, 1.75684)
+texture = ExtResource("8_qd1yl")
+
+[node name="GuardLabel" type="Label" parent="mainActionButtons"]
+offset_left = 73.75
+offset_top = 513.125
+offset_right = 172.75
+offset_bottom = 545.125
+theme_override_font_sizes/font_size = 23
+text = "GUARD"
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(960, 540)
+
+[node name="Node2D2" type="Node2D" parent="."]
