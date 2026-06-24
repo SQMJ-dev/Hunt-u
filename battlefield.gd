@@ -100,7 +100,7 @@ var player_profile : Dictionary = {
 }
 var smoothed_skill        : float = 0.3
 var heals_used_this_round : int   = 0
-
+var ai_debug: AIDebugSystem
 # ── READY / INPUT ─────────────────────────────────────────────────────────────
 
 func _ready():
@@ -131,8 +131,12 @@ func _ready():
 
 	$char_hand.hide()
 	$selection_hand.hide()
-
+	
+	ai_debug = AIDebugSystem.new(moves_json)
+	$dialog/debugLabel.show()
+	print("DEBUG INITIALIZED: ", ai_debug != null)  # Should print TRUE
 	start_battle()
+	
 
 func _input(event):
 	match battle_state:
@@ -576,7 +580,7 @@ func run_enemy_turn():
 		enemy_index += 1
 		run_enemy_turn()
 
-# ── GOAP AI ────────────────────────────────────────────────────────────────────
+# ── utility AI ────────────────────────────────────────────────────────────────────
 
 func player_has_active_buff() -> bool:
 	for ally in allies_array:
@@ -657,15 +661,54 @@ func get_active_goals(tier : int) -> Array:
 	active.sort_custom(func(a, b): return a["priority"] > b["priority"])
 	return active
 
-func goap_plan(chara) -> Array:
+func utility_plan(chara) -> Array:
+	print("GOAP_PLAN CALLED for: ", chara.name)
 	var tier  = get_enemy_tier()
 	var world = get_world_state(chara)
 	var goals = get_active_goals(tier)
+	
 	for goal in goals:
 		var action = find_action_for_goal(chara, goal["id"], world)
 		if action.size() > 0:
+			var debug_text = ai_debug.log_decision(
+				player_profile["turns_played"],
+				chara.name,
+				tier,
+				goal["id"],
+				action[1],
+				world
+			)
+			$dialog/debugLabel.text = debug_text
+			
+			ai_debug.log_skill_update(
+				player_profile["turns_played"],
+				smoothed_skill,
+				tier
+			)
+			
 			return action
-	return fallback_action(chara)
+	
+	# Fallback action
+	var fallback = fallback_action(chara)
+	
+	# NEW: Log fallback decision too
+	var debug_text = ai_debug.log_decision(
+		player_profile["turns_played"],
+		chara.name,
+		tier,
+		"fallback",
+		fallback[1],
+		world
+	)
+	$dialog/debugLabel.text = debug_text
+	
+	ai_debug.log_skill_update(
+		player_profile["turns_played"],
+		smoothed_skill,
+		tier
+	)
+	
+	return fallback
 
 func find_action_for_goal(chara, goal_id : String, world : Dictionary) -> Array:
 	var m = moves_json
@@ -740,7 +783,7 @@ func find_action_for_goal(chara, goal_id : String, world : Dictionary) -> Array:
 	return []
 
 func pick_enemy_action(chara) -> Array:
-	return goap_plan(chara)
+	return utility_plan(chara)
 
 func fallback_action(chara) -> Array:
 	for atk in chara.moves_array:
@@ -792,6 +835,8 @@ func check_battle_over() -> bool:
 	return false
 
 func end_battle():
+	ai_debug.export_skill_data_csv("user://ai_skill_data.csv")
+	
 	await clicked
 	get_tree().reload_current_scene()
 

@@ -101,6 +101,15 @@ autowrap_mode = 2
 clip_text = true
 text_overrun_behavior = 4
 
+[node name="debugLabel" type="RichTextLabel" parent="dialog"]
+layout_mode = 0
+offset_left = 1408.0
+offset_top = 370.0
+offset_right = 1908.0
+offset_bottom = 570.0
+bbcode_enabled = true
+scroll_following = true
+
 [node name="confirmButtons" type="Control" parent="."]
 visible = false
 layout_mode = 3

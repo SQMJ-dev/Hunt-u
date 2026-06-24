@@ -19,5 +19,5 @@ aff_fire = "neutral"
 aff_water = "neutral"
 aff_wind = "weak"
 aff_electric = "resist"
-moveset = Array[String](["Slash", "Bash", "Stab", "Barrage", "Medri", "Carikaja", "Bilagi", "Gari", "Garigi"])
+moveset = Array[String](["Slash", "Bash", "Stab", "Barrage", "Carikaja", "Bilagi", "Gari", "Garigi"])
 metadata/_custom_type_script = "uid://b5nw4wukq8usa"
