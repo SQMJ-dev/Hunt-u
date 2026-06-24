@@ -7,7 +7,7 @@
 script = ExtResource("1_ybhrh")
 sprite = ExtResource("2_e4xuw")
 description = "Brave humanoid trained to fight. Tough and strong."
-STR = 17
+STR = 20
 MAG = 11
 END = 23
 SPD = 12
