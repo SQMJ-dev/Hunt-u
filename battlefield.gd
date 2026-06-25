@@ -649,6 +649,7 @@ func get_active_goals(tier : int) -> Array:
 		["exploit_chill",     8, 3],
 		["exploit_weakness",  7, 2],
 		["counter_buff",      6, 2],
+		["debuff_enemy",    5.5, 2],
 		["aoe_pressure",      5, 2],
 		["buff_self",         4, 3],
 		["smart_damage",      2, 2],
@@ -662,7 +663,7 @@ func get_active_goals(tier : int) -> Array:
 	return active
 
 func utility_plan(chara) -> Array:
-	print("GOAP_PLAN CALLED for: ", chara.name)
+	print("utility_PLAN CALLED for: ", chara.name)
 	var tier  = get_enemy_tier()
 	var world = get_world_state(chara)
 	var goals = get_active_goals(tier)
@@ -780,6 +781,13 @@ func find_action_for_goal(chara, goal_id : String, world : Dictionary) -> Array:
 				if alive.size() > 0:
 					if m[chosen]["targets"] == "all_enemies": return [chara, chosen]
 					return [chara, chosen, alive[randi() % alive.size()]]
+		"debuff_enemy":
+			if not world["player_buffed"]: return []
+			var target = world["most_buffed_player"]
+			if target == null: return []
+			for atk in chara.moves_array:
+				if moves_json[atk]["type"] == "debuff" and can_use_move(chara, atk):
+					return [chara, atk, target]
 	return []
 
 func pick_enemy_action(chara) -> Array:
