@@ -101,6 +101,7 @@ var player_profile : Dictionary = {
 var smoothed_skill        : float = 0.3
 var heals_used_this_round : int   = 0
 var ai_debug: AIDebugSystem
+var use_adaptive_ai: bool = true  
 # ── READY / INPUT ─────────────────────────────────────────────────────────────
 
 func _ready():
@@ -131,10 +132,14 @@ func _ready():
 
 	$char_hand.hide()
 	$selection_hand.hide()
-	
+	use_adaptive_ai = GameData.use_adaptive_ai
 	ai_debug = AIDebugSystem.new(moves_json)
-	$dialog/debugLabel.show()
-	print("DEBUG INITIALIZED: ", ai_debug != null)  # Should print TRUE
+	if use_adaptive_ai:
+		$dialog/debugLabel.show()
+	else:
+		$dialog/debugLabel.hide()
+	print("DEBUG INITIALIZED: ", ai_debug != null)
+	print("AI MODE: ", "Adaptive" if use_adaptive_ai else "Scripted")
 	start_battle()
 	
 
@@ -661,7 +666,7 @@ func get_active_goals(tier : int) -> Array:
 			active.append({"id": goal[0], "priority": goal[1]})
 	active.sort_custom(func(a, b): return a["priority"] > b["priority"])
 	return active
-
+# ── ADAPTIVE AI ──────────────────────────────────────
 func utility_plan(chara) -> Array:
 	print("utility_PLAN CALLED for: ", chara.name)
 	var tier  = get_enemy_tier()
@@ -711,6 +716,52 @@ func utility_plan(chara) -> Array:
 	
 	return fallback
 
+# ── SCRIPTED AI (BASELINE FOR COMPARISON) ──────────────────────────────────────
+
+func scripted_plan(chara) -> Array:
+	print("SCRIPTED_PLAN CALLED for: ", chara.name)
+	var m = moves_json
+	
+	# SCRIPTED RULE 1: If critical ally exists → heal them
+	var critical_ally = null
+	for teammate in enemies_array:
+		if teammate.visible and teammate.current_health < teammate.max_health * 0.25:
+			critical_ally = teammate
+			break
+	
+	if critical_ally != null:
+		for atk in chara.moves_array:
+			if m[atk]["type"] == "healing" and can_use_move(chara, atk):
+				if m[atk]["targets"] == "single_ally":
+					return [chara, atk, critical_ally]
+				elif m[atk]["targets"] == "all_allies":
+					return [chara, atk]
+	
+	# SCRIPTED RULE 2: If self HP low → heal self
+	var self_hp_ratio = float(chara.current_health) / max(chara.max_health, 1)
+	if self_hp_ratio < 0.3:
+		for atk in chara.moves_array:
+			if m[atk]["type"] == "healing" and can_use_move(chara, atk):
+				if m[atk]["targets"] == "single_ally":
+					return [chara, atk, chara]
+				elif m[atk]["targets"] == "all_allies":
+					return [chara, atk]
+	
+	# SCRIPTED RULE 3: Always attack (no adaptive strategy)
+	var damage_moves = []
+	for atk in chara.moves_array:
+		if m[atk]["power"] > 0 and can_use_move(chara, atk):
+			damage_moves.append(atk)
+	
+	if damage_moves.size() > 0:
+		var chosen = damage_moves[0]  # Always picks first available attack (predictable/scripted)
+		var alive  = allies_array.filter(func(a): return a.visible)
+		if alive.size() > 0:
+			if m[chosen]["targets"] == "all_enemies":
+				return [chara, chosen]
+			return [chara, chosen, alive[0]]  # Always targets first alive ally
+	
+	return fallback_action(chara)
 func find_action_for_goal(chara, goal_id : String, world : Dictionary) -> Array:
 	var m = moves_json
 	match goal_id:
@@ -791,7 +842,10 @@ func find_action_for_goal(chara, goal_id : String, world : Dictionary) -> Array:
 	return []
 
 func pick_enemy_action(chara) -> Array:
-	return utility_plan(chara)
+	if use_adaptive_ai:
+		return utility_plan(chara)
+	else:
+		return scripted_plan(chara)
 
 func fallback_action(chara) -> Array:
 	for atk in chara.moves_array:

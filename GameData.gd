@@ -7,3 +7,4 @@ extends Node
 
 # Each entry is a Dictionary: { "race_stats": <CharacterStats>, "char_name": String }
 var chosen_ally_data : Array = []
+var use_adaptive_ai : bool = true  # ← NEW: shared between scenes

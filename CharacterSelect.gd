@@ -44,13 +44,13 @@ var non_selected_characters : Array = []
 var allies_array             : Array = []
 
 var battle_state
-enum STATES { PREBATTLE, CONFIRMSELECTION }
+enum STATES { PREBATTLE, CONFIRMSELECTION, SELECTINGAIMODE }
 
 var selected
 var button_selected
 
 var moves_json = load("res://moves.json").data
-
+var ai_mode_selected  # Will hold "adaptive" or "scripted"
 # ── READY / INPUT ─────────────────────────────────────────────────────────────
 
 func _ready():
@@ -75,7 +75,8 @@ func _input(event):
 			selecting_allies(event)
 		STATES.CONFIRMSELECTION:
 			confirm_selected(event)
-
+		STATES.SELECTINGAIMODE:      
+			selecting_ai_mode(event)
 # ── HELPERS ───────────────────────────────────────────────────────────────────
 
 func color_move(move_name : String) -> String:
@@ -185,7 +186,7 @@ func confirm_selected(event):
 			selected.hide()
 
 			if allies_array.size() == 3:
-				_launch_battle()
+				show_ai_mode_selection()
 			else:
 				selected          = non_selected_characters[0]
 				selected.position = PREVIEW_POSITION
@@ -206,3 +207,38 @@ func _launch_battle():
 			"char_name":  ally.name
 		})
 	get_tree().change_scene_to_file("res://Battlefield.tscn")
+
+# ── AI MODE SELECTION ─────────────────────────────────────────────────────────
+
+func show_ai_mode_selection():
+	$dialog/topBox.hide()
+	$dialog/topBoxLabel.hide()
+	ai_mode_selected = "adaptive"
+	$dialog/bottomBoxLabel.text  = "Choose Enemy AI Mode:\n\n"
+	$dialog/bottomBoxLabel.text += "[color=#00FF00]> Adaptive AI[/color]  (Learns and adapts to your playstyle)\n"
+	$dialog/bottomBoxLabel.text += "  Scripted AI  (Fixed traditional behavior)\n\n"
+	$dialog/bottomBoxLabel.text += "Use Left/Right to choose, Confirm to select."
+	battle_state = STATES.SELECTINGAIMODE
+
+func selecting_ai_mode(event):
+	if event.is_action_pressed("ui_left") or event.is_action_pressed("ui_right") or \
+	   event.is_action_pressed("ui_up")   or event.is_action_pressed("ui_down"):
+		if ai_mode_selected == "adaptive":
+			ai_mode_selected = "scripted"
+		else:
+			ai_mode_selected = "adaptive"
+
+		if ai_mode_selected == "adaptive":
+			$dialog/bottomBoxLabel.text  = "Choose Enemy AI Mode:\n\n"
+			$dialog/bottomBoxLabel.text += "[color=#00FF00]> Adaptive AI[/color]  (Learns and adapts to your playstyle)\n"
+			$dialog/bottomBoxLabel.text += "  Scripted AI  (Fixed traditional behavior)\n\n"
+			$dialog/bottomBoxLabel.text += "Use Left/Right to choose, Confirm to select."
+		else:
+			$dialog/bottomBoxLabel.text  = "Choose Enemy AI Mode:\n\n"
+			$dialog/bottomBoxLabel.text += "  Adaptive AI  (Learns and adapts to your playstyle)\n"
+			$dialog/bottomBoxLabel.text += "[color=#00FF00]> Scripted AI[/color]  (Fixed traditional behavior)\n\n"
+			$dialog/bottomBoxLabel.text += "Use Left/Right to choose, Confirm to select."
+
+	if event.is_action_pressed("ui_accept"):
+		GameData.use_adaptive_ai = (ai_mode_selected == "adaptive")
+		_launch_battle()
