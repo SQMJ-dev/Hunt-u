@@ -55,7 +55,7 @@ var allies_array  : Array = []
 var enemies_array : Array = []
 
 var chara_positions : Dictionary = {
-	"ally0":  Vector2(608,202), "ally1":  Vector2(818,430), "ally2":  Vector2(608, 613),
+	"ally0":  Vector2(608,202), "ally1":  Vector2(818,430), "ally2":  Vector2(584, 613),
 	"enemy0": Vector2(1464, 167), "enemy1": Vector2(1246, 430), "enemy2": Vector2(1464, 613),
 }
 
@@ -174,10 +174,7 @@ func move_char_hand_to(character : Node2D) -> void:
 # ── BATTLE START ──────────────────────────────────────────────────────────────
 
 func start_battle():
-	# Resize dialog box for battle layout
 	$dialog/bottomBoxLabel.add_theme_font_size_override("normal_font_size", 30)
-	#$dialog/bottomBox.position      = battle_dialog_pos
-	#$dialog/bottomBox.scale         = battle_dialog_size
 	$dialog/bottomBoxLabel.position = battle_label_pos
 	$dialog/bottomBoxLabel.size     = battle_label_size
 
@@ -194,6 +191,8 @@ func start_battle():
 		x.show()
 		x.get_node("ProgressBar").show()
 		x.get_node("ManaBar").show()
+		x.get_node("ProgressBar/HP").show()
+		x.get_node("ManaBar/MP").show()
 
 	# Position and show enemies
 	for child in $enemies.get_children():
@@ -202,6 +201,8 @@ func start_battle():
 		child.get_node("Sprite2D").flip_h = true
 		child.get_node("ProgressBar").show()
 		child.get_node("ManaBar").show()
+		child.get_node("ProgressBar/HP").show()
+		child.get_node("ManaBar/MP").show()
 		child.show()
 
 	ally_index = 0
@@ -762,6 +763,7 @@ func scripted_plan(chara) -> Array:
 			return [chara, chosen, alive[0]]  # Always targets first alive ally
 	
 	return fallback_action(chara)
+	
 func find_action_for_goal(chara, goal_id : String, world : Dictionary) -> Array:
 	var m = moves_json
 	match goal_id:

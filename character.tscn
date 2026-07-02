@@ -173,6 +173,11 @@ bg_color = Color(0.415686, 0.203922, 0.227451, 1)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_wa5vi"]
 bg_color = Color(3.85046e-06, 0.658628, 0.851838, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(3.36915e-07, 0.387658, 0.455294, 1)
 
 [node name="character" type="Node2D"]
 scale = Vector2(2, 2)
@@ -193,6 +198,15 @@ theme_override_styles/fill = SubResource("StyleBoxFlat_g711a")
 value = 70.0
 show_percentage = false
 
+[node name="HP" type="Label" parent="ProgressBar"]
+visible = false
+layout_mode = 0
+offset_left = -26.5
+offset_top = -5.0
+offset_right = 13.5
+offset_bottom = 18.0
+text = "HP"
+
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
 &"": SubResource("AnimationLibrary_1vpx7")
@@ -208,6 +222,14 @@ theme_override_styles/background = SubResource("StyleBoxFlat_pjt0s")
 theme_override_styles/fill = SubResource("StyleBoxFlat_wa5vi")
 value = 70.0
 show_percentage = false
+
+[node name="MP" type="Label" parent="ManaBar"]
+visible = false
+offset_left = -26.0
+offset_top = -5.0
+offset_right = 14.0
+offset_bottom = 18.0
+text = "MP"
 
 [node name="BuffDisplay" type="Node2D" parent="."]
 
