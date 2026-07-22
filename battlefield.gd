@@ -56,7 +56,7 @@ var enemies_array : Array = []
 
 var chara_positions : Dictionary = {
 	"ally0":  Vector2(608,202), "ally1":  Vector2(818,430), "ally2":  Vector2(584, 613),
-	"enemy0": Vector2(1464, 167), "enemy1": Vector2(1246, 430), "enemy2": Vector2(1464, 613),
+	"enemy0": Vector2(1464, 140), "enemy1": Vector2(1246, 430), "enemy2": Vector2(1464, 613),
 }
 
 var battle_dialog_pos  : Vector2 = Vector2(696, 971)
@@ -84,6 +84,8 @@ var enemy_index : int = 0
 var moves_json = load("res://moves.json").data
 
 var vfx_scenes : Dictionary = {}
+var sfx_sounds : Dictionary = {}
+
 
 signal clicked
 
@@ -116,6 +118,16 @@ func _ready():
 	vfx_scenes["buff"]   = preload("res://effects/buff_vfx.tscn")
 	vfx_scenes["charge"]   = preload("res://effects/buff_vfx.tscn")
 	vfx_scenes["concentrate"]   = preload("res://effects/buff_vfx.tscn")
+	sfx_sounds["slash"]       = preload("res://audio/sfx/slash.wav")
+	sfx_sounds["blunt"]       = preload("res://audio/sfx/slash.wav")
+	sfx_sounds["pierce"]      = preload("res://audio/sfx/slash.wav")
+	sfx_sounds["fire"]        = preload("res://audio/sfx/fire.wav")
+	sfx_sounds["electric"]    = preload("res://audio/sfx/electric.wav")
+	sfx_sounds["water"]       = preload("res://audio/sfx/water.wav")
+	sfx_sounds["wind"]        = preload("res://audio/sfx/wind.wav")
+	sfx_sounds["healing"]     = preload("res://audio/sfx/healing.wav")
+	sfx_sounds["buff"]        = preload("res://audio/sfx/buff.wav")
+	sfx_sounds["debuff"]      = preload("res://audio/sfx/debuff.wav")
 	# Build ally instances from GameData (set by CharacterSelect)
 	var char_scene = preload("res://Character.tscn")
 	for data in GameData.chosen_ally_data:
@@ -1107,9 +1119,11 @@ func resolve_hit_on_target(attacker, move_name : String, target):
 	var move = moves_json[move_name]
 
 	if move["type"] == "buff" or move["type"] == "debuff":
+		play_sfx(move["type"])
 		await resolve_buff(attacker, move_name, target)
 		return
 	if move["type"] == "healing":
+		play_sfx("healing")
 		await resolve_heal(attacker, move_name, target)
 		return
 	if move["type"] == "charge":
@@ -1180,6 +1194,7 @@ func resolve_hit_on_target(attacker, move_name : String, target):
 
 	update_hit_streak(target, move["type"])
 	play_vfx(move["type"], target.position)
+	play_sfx(move["type"])
 
 	# ── FIX: change_health is now OUTSIDE the "weak" branch so ALL hits apply damage ──
 	if affinity == "weak":
@@ -1252,3 +1267,8 @@ func screen_shake(intensity : float = 6.0, duration : float = 0.25):
 		tween.tween_property($Camera2D, "offset", offset, duration / steps)
 	tween.tween_property($Camera2D, "offset", Vector2.ZERO, 0.05)
 	await tween.finished
+
+func play_sfx(move_type: String):
+	if sfx_sounds.has(move_type):
+		$sfx_player.stream = sfx_sounds[move_type]
+		$sfx_player.play()

@@ -225,6 +225,7 @@ show_percentage = false
 
 [node name="MP" type="Label" parent="ManaBar"]
 visible = false
+layout_mode = 0
 offset_left = -26.0
 offset_top = -5.0
 offset_right = 14.0

@@ -327,3 +327,5 @@ text = "GUARD"
 position = Vector2(960, 540)
 
 [node name="Node2D2" type="Node2D" parent="."]
+
+[node name="sfx_player" type="AudioStreamPlayer2D" parent="."]

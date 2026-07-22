@@ -17,8 +17,8 @@
 [ext_resource type="Texture2D" uid="uid://ye2s28va4k4w" path="res://effects/arrowleft.png" id="14_ptxqb"]
 
 [sub_resource type="Gradient" id="Gradient_uambc"]
-offsets = PackedFloat32Array(0.559055, 1)
-colors = PackedColorArray(0.649786, 0.654232, 1, 1, 0.580768, 0.376771, 1, 1)
+offsets = PackedFloat32Array(0, 0.110169, 0.220339, 1)
+colors = PackedColorArray(0, 0, 0, 1, 0.191949, 0.124526, 0.330508, 1, 0.280822, 0.182182, 0.483535, 1, 0.580768, 0.376771, 1, 1)
 
 [sub_resource type="GradientTexture1D" id="GradientTexture1D_4akcq"]
 gradient = SubResource("Gradient_uambc")
