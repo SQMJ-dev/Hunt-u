@@ -55,7 +55,7 @@ var allies_array  : Array = []
 var enemies_array : Array = []
 
 var chara_positions : Dictionary = {
-	"ally0":  Vector2(608,202), "ally1":  Vector2(818,430), "ally2":  Vector2(584, 613),
+	"ally0":  Vector2(580,202), "ally1":  Vector2(818,430), "ally2":  Vector2(565, 613),
 	"enemy0": Vector2(1464, 140), "enemy1": Vector2(1246, 430), "enemy2": Vector2(1464, 613),
 }
 
@@ -1054,8 +1054,8 @@ func update_skill_score():
 	smoothed_skill = lerp(smoothed_skill, calculate_skill_score(), 0.15)
 
 func get_enemy_tier() -> int:
-	if smoothed_skill < 0.25: return 1
-	if smoothed_skill < 0.55: return 2
+	if smoothed_skill < 0.35: return 1
+	if smoothed_skill < 0.6: return 2
 	return 3
 
 # ── AILMENTS ──────────────────────────────────────────────────────────────────

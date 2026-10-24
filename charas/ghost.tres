@@ -19,4 +19,4 @@ aff_fire = "neutral"
 aff_water = "weak"
 aff_wind = "neutral"
 aff_electric = "neutral"
-moveset = Array[String](["Ara", "Bila", "Gari", "Takanda", "Drain"])
+moveset = Array[String](["Ara", "Bila", "Gari", "Takanda", "Dri"])
